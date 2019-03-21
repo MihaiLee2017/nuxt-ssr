@@ -16,16 +16,18 @@ service.interceptors.request.use(
 )
 service.interceptors.response.use(
   response => {
-    const { data } = response
-    if (data.code != 0) {
+    const { data, status } = response
+    if (status != 200 || data.code != 0) {
       Message.error({
-        message: data.errMsg,
+        message: data.msg || data.message,
         showClose: true
       })
       return Promise.reject(data)
     } else {
       return data
     }
+    // console.log(response)
+    // return data
   },
   error => {
     const msg = error.toString()

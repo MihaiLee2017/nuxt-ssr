@@ -42,6 +42,8 @@
   </div>
 </template>
 <script>
+import CryptoJS from 'crypto-js'
+import { singUpAction, verifyAction } from '../utils/axios/api/userAction'
 export default {
   layout: 'blank',
   data() {
@@ -102,8 +104,68 @@ export default {
     }
   },
   methods: {
-    sendMsg() {},
-    register() {}
+    sendMsg() {
+      if (this.timerid) {
+        return false
+      }
+      let namePass
+      let emailPass
+      this.statusMsg = ''
+      this.$refs.ruleForm.validateField('name', valid => {
+        namePass = valid
+      })
+      if (namePass) {
+        return false
+      }
+      this.$refs.ruleForm.validateField('email', valid => {
+        emailPass = valid
+      })
+      if (emailPass) {
+        return false
+      }
+      if (!namePass && !emailPass) {
+        let params = {
+          username: window.encodeURIComponent(this.ruleForm.name),
+          email: this.ruleForm.email
+        }
+        verifyAction(params)
+          .then(res => {
+            let count = 60
+            this.statusMsg = `验证码已发送，剩余${count--}秒`
+            this.timerid = setInterval(() => {
+              if (count == 0) {
+                clearInterval(this.timerid)
+                this.timerid = null
+                this.statusMsg = ''
+                return false
+              }
+              this.statusMsg = `验证码已发送，剩余${count--}秒`
+            }, 1000)
+          })
+          .catch(err => {
+            this.statusMsg = err.msg || err.message
+          })
+      }
+    },
+    register() {
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          let params = {
+            username: window.encodeURIComponent(this.ruleForm.name),
+            password: CryptoJS.MD5(this.ruleForm.pwd).toString(),
+            email: this.ruleForm.email,
+            code: this.ruleForm.code
+          }
+          singUpAction(params)
+            .then(res => {
+              location.href = '/login'
+            })
+            .catch(err => {
+              this.error = err.message
+            })
+        }
+      })
+    }
   }
 }
 </script>

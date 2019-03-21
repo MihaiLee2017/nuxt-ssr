@@ -26,7 +26,8 @@
 </template>
 <script>
 import CryptoJS from 'crypto-js'
-import {testAction} from '../utils/axios/api/userAction.js'
+// import { testAction } from '../utils/axios/api/userAction.js'
+import { singInAction } from '../utils/axios/api/userAction'
 export default {
   layout: 'blank',
   data() {
@@ -43,11 +44,13 @@ export default {
         username: window.encodeURIComponent(this.username),
         password: CryptoJS.MD5(this.password).toString()
       }
-      testAction(params).then(res=>{
-
-      }).catch(err=>{
-
-      })
+      singInAction(params)
+        .then(res => {
+          location.href = '/'
+        })
+        .catch(err => {
+          this.error = err.message
+        })
     }
   }
 }

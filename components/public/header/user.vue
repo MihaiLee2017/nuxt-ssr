@@ -14,11 +14,17 @@
   </div>
 </template>
 <script>
+import { getUserAction } from '../../../utils/axios/api/userAction'
 export default {
   data() {
     return {
       user: ''
     }
+  },
+  mounted() {
+    getUserAction({}).then(res => {
+      this.user = res.data.user.name
+    })
   }
 }
 </script>

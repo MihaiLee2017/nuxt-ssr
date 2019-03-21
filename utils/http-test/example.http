@@ -1,0 +1,26 @@
+
+###
+POST http://192.168.133.143:8088/role/getRoleById.do HTTP/1.1
+content-type: application/json
+{
+    "rid":"1"
+}
+
+###
+POST http://192.168.133.143:8088/role/addRole.do HTTP/1.1
+content-type: application/json
+
+{
+    "id": null,
+    "rolecode": "9999",
+    "rolename": "444543534"
+}
+
+###
+POST http://localhost:3000/api/user/verify HTTP/1.1
+content-type: application/json
+
+{
+    "username":"mihai",
+    "email":"mihailee@sina.com"
+}
