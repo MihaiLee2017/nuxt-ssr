@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="15" class="center">
         <div class="wrapper">
-          <el-input v-model="search" @focus="focus" @blur="blur" placeholder="搜索商家或地点"></el-input>
+          <el-input v-model="search" @input="input" @focus="focus" @blur="blur" placeholder="搜索商家或地点"></el-input>
           <button class="el-button el-button-primary">
             <i class="el-icon-search"></i>
           </button>
@@ -66,12 +66,15 @@
   </div>
 </template>
 <script>
+import _ from 'lodash'
+import { getTopAction } from '../../../utils/axios/api/searchAction'
 export default {
   data() {
     return {
       search: '',
       isFocus: false,
-      hotPlace: ['火锅', '火锅', '火锅', '火锅'],
+      // hotPlace: ['火锅', '火锅', '火锅', '火锅'],
+      hotPlace: this.$store.state.home.hotPlace,
       searchList: ['故宫', '故宫', '故宫', '故宫']
     }
   },
@@ -91,7 +94,25 @@ export default {
       setTimeout(() => {
         this.isFocus = false
       }, 200)
-    }
+    },
+    input: _.debounce(async function() {
+      // console.log()
+      let self = this
+      this.searchList = []
+      if (this.search.length == 0) {
+        return false
+      }
+      let params = {
+        input: this.search,
+        city: this.$store.state.geo.position.city.replace('市', '')
+      }
+      await getTopAction(params).then(res => {
+        let { data } = res
+        this.searchList = data.top.slice(0, 10).map(item => {
+          return item.name
+        })
+      })
+    }, 300)
   }
 }
 </script>

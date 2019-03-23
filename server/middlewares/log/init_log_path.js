@@ -7,7 +7,6 @@ var confirmPath = function (pathStr) {
 
   if (!fs.existsSync(pathStr)) {
     fs.mkdirSync(pathStr);
-    console.log('createPath: ' + pathStr);
   }
 }
 

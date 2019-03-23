@@ -1,12 +1,7 @@
 import Redis from 'koa-redis'
-import nodeMailer from 'nodemailer'
 import Province from '../dbs/models/province'
-import Email from '../dbs/config'
-import Passport from '../utils/passport'
-import axiosUtils from '../utils/axios'
+import City from '../dbs/models/city'
 import axios from 'axios'
-import ApiError from '../utils/error/ApiError'
-import ApiErrorNames from '../utils/error/ApiErrorNames'
 let Store = new Redis().client
 
 const sign = 'b601f4f004b8e6b2b82741335d4f04d1'
@@ -38,6 +33,18 @@ export async function getMenu(ctx, next) {
     }
   }
 }
+// export async function getMenu(ctx, next) {
+//   try {
+//     let menu = await Menu.find()
+//     ctx.body = {
+//       data: {
+//         menu: menu
+//       }
+//     }
+//   } catch (err) {
+//     throw err
+//   }
+// }
 
 export async function getProvince(ctx, next) {
   try {
@@ -56,3 +63,72 @@ export async function getProvince(ctx, next) {
     throw err
   }
 }
+
+export async function getProvinceID(ctx, next) {
+  let params = {
+    id: ctx.params.id
+  }
+  try {
+    let city = await City.findOne(params)
+    ctx.body = {
+      data: {
+        city: city.value
+      }
+    }
+  } catch (err) {
+    throw err
+  }
+}
+
+export async function getCity(ctx, next) {
+  try {
+    let city = []
+    let ret = await City.find()
+    ret.forEach(item => {
+      city = city.concat(item.value)
+    })
+    ctx.body = {
+      data: {
+        city: city.map((item) => {
+          return {
+            province: item.province,
+            id: item.id,
+            name: item.name === '市辖区' || item.name === '省直辖县级行政区划'
+              ? item.province
+              : item.name
+          }
+        })
+      }
+    }
+  } catch (err) {
+    throw (err)
+  }
+}
+export async function hotCity(ctx, next) {
+  // let { status, data: {
+  //   hots
+  // } } = await axios.get(getUrl('hotCity'));
+  // if (status === 200) {
+  //   ctx.body = {
+  //     hots
+  //   }
+  // } else {
+  //   ctx.body = {
+  //     hots: []
+  //   }
+  // }
+  await axios.get(getUrl('hotCity')).then(res => {
+    let {
+      status,
+      data
+    } = res
+    ctx.body = {
+      data: {
+        hots: data.hots
+      }
+    }
+  }).catch(err => {
+    throw err
+  })
+}
+

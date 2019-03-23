@@ -10,7 +10,6 @@ service.interceptors.request.use(
     return confirm
   },
   error => {
-    console.log("Request ", error)
     return Promise.reject(error)
   }
 )

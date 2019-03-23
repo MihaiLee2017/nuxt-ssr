@@ -5,3 +5,6 @@ export const SIGNIN_URL = '/api/user/signin'
 export const VERIFY_URL = '/api/user/verify'
 export const EXIT_URL = '/api/user/exit'
 export const GET_USER_URL = '/api/user/getUser'
+
+
+export const SEARCH_TOP = '/api/search/getTop'

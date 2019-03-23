@@ -28,6 +28,12 @@ const store = () => {
         await commit("geo/setPosition", positionData.data.data)
         let menuData = await app.$axios('/api/geo/getMenu')
         await commit("home/setMenu", menuData.data.data.menu)
+        let hotPlace = await app.$axios('/api/search/getHotPlace', {
+          params: {
+            city: app.store.state.geo.position.city.replace('市', '')
+          }
+        })
+        await commit('home/setHotPlace', hotPlace.data.data.hotPlace)
       }
     }
   })
