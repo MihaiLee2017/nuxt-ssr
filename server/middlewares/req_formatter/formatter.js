@@ -2,8 +2,6 @@
 import { TestRegExp } from '../../utils/fn'
 import ApiError from '../../utils/error/ApiError'
 function response_formatter(ctx) {
-  console.log("response_formatter", ctx.body)
-  // ctx.status = 200
   if (ctx.body) {
     ctx.body = {
       code: ctx.body.code || 0,

@@ -14,3 +14,6 @@ export const GET_PROVINCE = '/api/geo/getProvince'
 export const GET_PROVINCE_ID = '/api/geo/getProvinceID'
 export const GET_CITY = '/api/geo/getCity'
 export const HOT_CITY = '/api/geo/hotCity'
+
+
+export const GET_CRUMBS = '/api/categroy/getCrumbs'

@@ -12,10 +12,14 @@
           </button>
           <dl class="hotPlace" v-if="isHotPlace">
             <dt>热门搜索</dt>
-            <dd v-for="(item,index) in hotPlace" :key="index">{{item}}</dd>
+            <dd v-for="(item,index) in hotPlace" :key="index">
+              <a :href="'/products?keyword='+item">{{item}}</a>
+            </dd>
           </dl>
           <dl class="searchList" v-if="isSearchList">
-            <dd v-for="(item,index) in searchList" :key="index">{{item}}</dd>
+            <dd v-for="(item,index) in searchList" :key="index">
+              <a :href="'/products?keyword='+item">{{item}}</a>
+            </dd>
           </dl>
         </div>
         <p class="suggest">
@@ -24,7 +28,7 @@
           <a href="#">故宫博物院</a>
           <a href="#">故宫博物院</a>
           <a href="#">故宫博物院</a> -->
-          <a href="#" v-for="(item,index) in hotPlace" :key="index">{{item}}</a>
+          <a :href="'/products?keyword='+item" v-for="(item,index) in hotPlace" :key="index">{{item}}</a>
         </p>
         <ul class="nav">
           <li>

@@ -5,5 +5,6 @@ export function getTopAction(params) {
 }
 
 export function getResultsByKeywords(params) {
+  console.log("RESULTS_BY_KEYWORDS")
   return Action.get(URL.RESULTS_BY_KEYWORDS, params)
 }

@@ -70,12 +70,14 @@ export async function getHotPlace(ctx) {
 }
 export async function resultsByKeywords(ctx) {
   const { city, keyword } = ctx.query
+  console.log()
+  let params = {
+    city: city,
+    keyword: keyword
+  }
   //
-  await axios.get(getUrl('resultsByKeywords'), {
-    params: {
-      city, keyword
-    }
-  }).then(res => {
+  console.log("paramsparamsparams", params)
+  await axios.get(getUrl('resultsByKeywords'), { params }).then(res => {
     let { status, data: { count, pois } } = res
     ctx.body = {
       data: { pois }
