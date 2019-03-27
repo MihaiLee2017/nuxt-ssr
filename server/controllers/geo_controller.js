@@ -68,6 +68,7 @@ export async function getProvinceID(ctx, next) {
   let params = {
     id: ctx.params.id
   }
+  console.log("getProvinceID:", ctx.params)
   try {
     let city = await City.findOne(params)
     ctx.body = {

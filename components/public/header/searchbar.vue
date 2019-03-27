@@ -18,12 +18,13 @@
             <dd v-for="(item,index) in searchList" :key="index">{{item}}</dd>
           </dl>
         </div>
-        <p class="suggset">
+        <p class="suggest">
+          <!-- <a href="#">故宫博物院</a>
           <a href="#">故宫博物院</a>
           <a href="#">故宫博物院</a>
           <a href="#">故宫博物院</a>
-          <a href="#">故宫博物院</a>
-          <a href="#">故宫博物院</a>
+          <a href="#">故宫博物院</a> -->
+          <a href="#" v-for="(item,index) in hotPlace" :key="index">{{item}}</a>
         </p>
         <ul class="nav">
           <li>
@@ -74,8 +75,13 @@ export default {
       search: '',
       isFocus: false,
       // hotPlace: ['火锅', '火锅', '火锅', '火锅'],
-      hotPlace: this.$store.state.home.hotPlace,
-      searchList: ['故宫', '故宫', '故宫', '故宫']
+      hotPlace: this.$store.state.home.hotPlace
+        .map(item => {
+          return item.name
+        })
+        .slice(0, 5),
+      // searchList: ['故宫', '故宫', '故宫', '故宫']
+      searchList: []
     }
   },
   computed: {

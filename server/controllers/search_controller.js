@@ -58,7 +58,7 @@ export async function getHotPlace(ctx) {
     } } = res
     ctx.body = {
       data: {
-        result
+        hotPlace: result
       }
     }
   }).catch(err => {
@@ -78,7 +78,8 @@ export async function resultsByKeywords(ctx) {
   }).then(res => {
     let { status, data: { count, pois } } = res
     ctx.body = {
-      data: pois
+      data: { pois }
+
     }
   }).catch(err => {
     throw err

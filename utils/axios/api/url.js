@@ -8,3 +8,9 @@ export const GET_USER_URL = '/api/user/getUser'
 
 
 export const SEARCH_TOP = '/api/search/getTop'
+export const RESULTS_BY_KEYWORDS = '/api/search/resultsByKeywords'
+
+export const GET_PROVINCE = '/api/geo/getProvince'
+export const GET_PROVINCE_ID = '/api/geo/getProvinceID'
+export const GET_CITY = '/api/geo/getCity'
+export const HOT_CITY = '/api/geo/hotCity'
